@@ -1,7 +1,7 @@
 import React from 'react';
 
-const List = ({
-    id, title, completed, todo, setTodo, provided, snapshot}) => {
+const List = React.memo(({
+    id, title, completed, todo, setTodo, provided, snapshot, handleClick}) => {
     const handleCompleChange = (id) => {
         let newTodoData = todo.map((data) => {
           if (data.id === id) {
@@ -13,10 +13,6 @@ const List = ({
         console.log(todo);
       }
     
-      const handleClick = (id) => {
-        let newTodoData = todo.filter((data) => data.id !== id);
-        setTodo(newTodoData);
-      }
     return (
         <div>
             <div key = {id} 
@@ -44,6 +40,6 @@ const List = ({
                         </div> 
         </div>
     );
-};
+});
 
 export default List;
