@@ -3,14 +3,17 @@ import Lists from './components/Lists';
 import { useCallback, useState } from 'react';
 import Form from './components/Form';
 
+const initialTodo = localStorage.getItem("todo") ? JSON.parse(localStorage.getItem("todo")) : [];
+
 //객체 리터럴 표현을 반환하기 위해서는 괄호 안에 한번 더 넣어야 한다. 
 function App() {
-  const [todo, setTodo] = useState([]);
+  const [todo, setTodo] = useState(initialTodo);
   const [value, setValue] = useState('');
 
   const handleClick = useCallback((id) => {
     let newTodoData = todo.filter((data) => data.id !== id);
     setTodo(newTodoData);
+    localStorage.setItem('todo', JSON.stringify(newTodoData));
   },[todo])
 
   const handleSubmit = (e) => {
@@ -22,11 +25,13 @@ function App() {
       completed : false,
     };
     setTodo(prev => [...prev, newTodo]);
+    localStorage.setItem('todo', JSON.stringify([...todo, newTodo]));
     setValue('');
   }
 
   const handleRemoveClick = () => {
     setTodo([]);
+    localStorage.setItem('todo', JSON.stringify([]));
   }
 
   return (
